@@ -238,7 +238,7 @@ class CourseDatabase:
                     #print(index, item)
                     if item in row[q_type] or search_type(item, row[q_type]):
                         matches_all[q_type].append(True)
-                        #print(clean_query, row, matches, matches_all, row[q_type])
+
                         #break
 
                     else:
@@ -250,10 +250,12 @@ class CourseDatabase:
                 for q_type2 in range(6):
                     if True in matches_all[q_type2]:
                         matches += 1
-                        #print(matches, "GGG", matches_all)
+
                 if matches >= len(clean_query) and row not in results:
                     results.append(row)
-                    #print("\n", matches, "HIT!\n")
+
+
+
 
 
         self.display_results(results, query)
@@ -261,8 +263,8 @@ class CourseDatabase:
     # ──────────────────────────────────────────────────────────────
     # Output
     # ──────────────────────────────────────────────────────────────
-    @staticmethod
-    def display_results(results: list, query: str):
+
+    def display_results(self, results: list, query: str):
         """Print search results."""
         if results:
             print(f"\nFound {len(results)} matching course(s):\n")
@@ -273,13 +275,15 @@ class CourseDatabase:
         else:
             print("\nNo courses found matching your search.")
             if " " in query:
-                print("You may have been trying to search multiple items at once, and forgotten to include semicolons (;) between each search term. This may have been the query you were trying to make: ")
+                print("You may have been trying to search multiple items at once, and forgotten to include semicolons (;) between each search term. \nThis may have been the query you were trying to make: ")
                 query_split = query.split()
                 corrected_query = ""
                 for i in query_split:
                     corrected_query = corrected_query + i + "; "
                 corrected_query = corrected_query[:-2]
                 print(corrected_query)
+                print("Searching new query... ")
+                self.search(corrected_query)
 
 
 
@@ -290,12 +294,9 @@ def main():
     course_db = CourseDatabase("DE_Equivalency_List_Clean.csv")
     course_db.load_data()
     course_db.preprocess()
-    #search_types = input("What do you plan on searching by? \n 1. Course Prefix \n 2. Course Number \n 3. Course Name \n 4. High School Credit Value \n 5. High School Graduation Code \n 6. G.E. Core Subject \nEnter the numbers in the order you will type them. Enter Here: ").split()
-    #search_types = course_db.clean_types_input(search_types)
-    #print(search_types)
-    #course_db.give_types_examples(search_types)
+    print("To search for a course, enter a search (Such as Enc; 1101)")
     search_query = input("Enter your search here, separated by semicolons: ")
-    course_db.search(search_query, [])
+    course_db.search(search_query)
 
 
 if __name__ == "__main__":
