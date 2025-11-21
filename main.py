@@ -215,7 +215,7 @@ class CourseDatabase:
 
         return results
 
-    def search(self, query: str, types: list):
+    def search(self, query: str):
         """
         Search for a course by prefix, number, or both (hybrid search).
         """
