@@ -1,6 +1,5 @@
 import pandas as pd
-import rapidfuzz
-
+from rapidfuzz import fuzz
 
 class CourseDatabase:
     """
@@ -62,11 +61,29 @@ class CourseDatabase:
     # ──────────────────────────────────────────────────────────────
     # Searching
     # ──────────────────────────────────────────────────────────────
+    # The following static methods return booleans. They are returned by the clean_search_query function.
+    # They will be used as different types of fuzzy searches. false_func means that no fuzzy search is used.
+    @staticmethod
+    def false_func(*args):
+        return False
+
+    @staticmethod
+    def w_ratio_bool(compare, compare_to, threshold=80):
+        return fuzz.WRatio(compare, compare_to) >= threshold
+
+    @staticmethod
+    def partial_ratio_bool(compare, compare_to, threshold=80):
+        return fuzz.partial_ratio(compare, compare_to) >= threshold
+
+    @staticmethod
+    def ratio_bool(compare, compare_to, threshold=80):
+        return fuzz.ratio(compare, compare_to) >= threshold
 
     def clean_search_query(self, query: str, q_type: str):
 
         query_mid = query.upper().split(";")
         query_final = []
+        fuzzy_type = self.false_func
         for i, e in enumerate(query_mid):
             query_mid[i] = e.strip()
         for search in query_mid:
@@ -81,21 +98,27 @@ class CourseDatabase:
                     search = "Invalid course number"
             elif q_type == "3" and len(query) > 4:  # Course Name
                 search = search.title()
+                fuzzy_type = self.w_ratio_bool
             elif q_type == "4":  # Credit Value
                 search = search
             elif q_type == "5":  # High school Graduation Code
                 search = search.title()
                 if search in self.LETTER_CONV:
                     search = self.LETTER_CONV[search]
+                else:
+                    fuzzy_type = self.w_ratio_bool
             elif q_type == "6":  # GE Core Subject
                 search = search.title()
+                if " " in query:
+                    fuzzy_type = self.partial_ratio_bool
+                else:
+                    fuzzy_type = self.ratio_bool
             query_final.append(search)
 
+        # print(query_mid)
 
-       # print(query_mid)
-
-        #print(query_mid)
-        return query_final
+        # print(query_mid)
+        return query_final, fuzzy_type
 
         pass
 
@@ -150,30 +173,62 @@ class CourseDatabase:
                 return_types.append("multi")
         return return_types
 
+
+
+    def fuzzy_match(self, query_parts):
+        """
+        Perform fuzzy matching across all six searchable fields.
+        Uses RapidFuzz's WRatio, which automatically selects the best matching algorithm.
+        """
+        THRESHOLD = 90  # Adjust as needed (60–85 depending on strictness)
+        results = []
+
+        for row in self.database_read:
+            # Convert all columns to strings for safety
+            row_fields = [
+                str(row[0]),  # prefix
+                str(row[1]),  # course number
+                str(row[2]),  # course name
+                str(row[3]),  # HS credit
+                str(row[4]),  # graduation code
+                str(row[5])  # GE core subject
+            ]
+
+            matched = False
+
+            # Check each search term against all columns
+            for term in query_parts:
+                term = term.strip()
+
+                for field in row_fields:
+                    score = fuzz.WRatio(term, field)
+
+                    if score >= THRESHOLD:
+                        matched = True
+                        break
+
+                if matched:
+                    break
+
+            if matched:
+                results.append(row)
+
+        return results
+
     def search(self, query: str, types: list):
         """
         Search for a course by prefix, number, or both (hybrid search).
         """
         print("Started search, searching ", query)
-
-        #  clean_types = self.clean_types_input(types)
-        #  types_to_expect = self.find_courses_types(types)
         query = query.title().strip()
-        hybrid = False  # " " in query
-        #  query = self.clean_search_query(query, types[0])
-        clean_queries = (self.clean_search_query(query, str(i)) for i in range(1, 7))
-        for i in clean_queries:
-            print(i)
 
-        print(query, types)
+        #print(query, types)
         results = []
         for row in self.database_read:
-            if row[2] == 'English Composition (GE Core)':
-                pass
             #for search in query:
             matches_all = [[], [], [], [], [], []]
             for q_type in range(6):
-                clean_query = self.clean_search_query(query, str(q_type + 1))
+                clean_query, search_type = self.clean_search_query(query, str(q_type + 1))
                 #print(clean_query, "GGGGG")
 
                 matches = 0
@@ -181,9 +236,9 @@ class CourseDatabase:
                 for index, item in enumerate(clean_query):
 
                     #print(index, item)
-                    if item in row[q_type]:
+                    if item in row[q_type] or search_type(item, row[q_type]):
                         matches_all[q_type].append(True)
-                        print(clean_query, row, matches, matches_all, row[q_type])
+                        #print(clean_query, row, matches, matches_all, row[q_type])
                         #break
 
                     else:
@@ -195,22 +250,11 @@ class CourseDatabase:
                 for q_type2 in range(6):
                     if True in matches_all[q_type2]:
                         matches += 1
-                        print(matches, "GGG", matches_all)
+                        #print(matches, "GGG", matches_all)
                 if matches >= len(clean_query) and row not in results:
                     results.append(row)
-                    print("\n", matches, "HIT!\n")
-                if 0 != matches:
-                    print(matches_all)
+                    #print("\n", matches, "HIT!\n")
 
-
-            '''
-            if hybrid:
-                if prefix in course_prefix and number in course_number:
-                    results.append(row)
-            else:
-                if prefix in course_prefix or number in course_number:
-                    results.append(row)
-            '''
 
         self.display_results(results, query)
 
