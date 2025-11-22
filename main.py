@@ -269,21 +269,27 @@ class CourseDatabase:
         if results:
             print(f"\nFound {len(results)} matching course(s):\n")
             for row in results:
-                print(row)
+                row[3] = (row[3] + " credit") + ("s" if not row[3] == "1" else "")
+                for i, e in enumerate(row):
+                    print(e, end=", " if i != 0 and i != 5 else " ")
+                print()
             if len(results) >= 20:
                 print(f"\n Found {len(results)} matching courses. To narrow down the search further, be more specific by including more search terms.")
         else:
             print("\nNo courses found matching your search.")
-            if " " in query:
+            if " " in query and ";" not in query:
                 print("You may have been trying to search multiple items at once, and forgotten to include semicolons (;) between each search term. \nThis may have been the query you were trying to make: ")
                 query_split = query.split()
                 corrected_query = ""
+                corrected_query2 = ""
                 for i in query_split:
                     corrected_query = corrected_query + i + "; "
+                    corrected_query2 = corrected_query2 + i.strip() + ";"
                 corrected_query = corrected_query[:-2]
+                corrected_query2 = corrected_query2[:-1]
                 print(corrected_query)
                 print("Searching new query... ")
-                self.search(corrected_query)
+                self.search(corrected_query2)
 
 
 
