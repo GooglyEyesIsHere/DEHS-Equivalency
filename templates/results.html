@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+</head>
+<body>
+
+<h1>Results for "{{ query }}"</h1>
+
+{% if results %}
+    <ul>
+    {% for row in results %}
+        <li>{{ row }}</li>
+    {% endfor %}
+    </ul>
+
+{% else %}
+    <p>No matching courses found.</p>
+{% endif %}
+
+<a href="/">Search again</a>
+
+</body>
+</html>
