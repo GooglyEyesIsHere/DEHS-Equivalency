@@ -16,4 +16,13 @@ def home():
 def search():
     query = request.form.get("query")
     results = db.search(query)
-    return render_template("results.html", results=results, query=query)
+    resultsList = []
+    thisResult = []
+    if results == None:
+        return render_template("results.html", results=None, query=query, lenResults=0)
+    for i, e in enumerate(results):
+        thisResult.append(e)
+        if i % 6 == 5:
+            resultsList.append(thisResult)
+            thisResult = []
+    return render_template("results.html", results=resultsList, query=query, lenResults=len(results)//6)

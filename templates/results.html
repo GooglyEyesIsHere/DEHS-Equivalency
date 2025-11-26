@@ -2,17 +2,51 @@
 <html>
 <head>
     <title>Search Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 <body>
+<a href="/">Search again</a>
 
 <h1>Results for "{{ query }}"</h1>
 
 {% if results %}
-    <ul>
+    Found {{lenResults}} results
+    <table>
+
+        <colgroup>
+            <col style="background-color: white" /> <!-- White -->
+            <col style="background-color: #f0f0f0" /> <!-- Grey -->
+            <col style="background-color: white" /> <!-- White -->
+            <col style="background-color: #f0f0f0" /> <!-- Grey -->
+            <col style="background-color: white" /> <!-- White -->
+            <col style="background-color: #f0f0f0" /> <!-- Grey -->
+        </colgroup>
+        <colgroup>
+            <col style="border: 1px solid black"/>
+        </colgroup>
+        <tr>
+            <th>Course Prefix</th>
+            <th>Course Number</th>
+            <th>Course Name</th>
+            <th>HS Credit Value</th>
+            <th>HS Graduation Code</th>
+            <th>GE Core Subject</th>
+        </tr>
+        <tr>
+
     {% for row in results %}
-        <li>{{ row }}</li>
+        <td>{{ row[0] }}</td>
+        <td>{{ row[1] }}</td>
+        <td>{{ row[2] }}</td>
+        <td>{{ row[3] }}</td>
+        <td>{{ row[4] }}</td>
+        <td>{{ row[5] }}</td>
+        </tr>
     {% endfor %}
-    </ul>
+
+
+    </table>
 
 {% else %}
     <p>No matching courses found.</p>

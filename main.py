@@ -178,12 +178,12 @@ class CourseDatabase:
         if results:
             print(f"\nFound {len(results)} matching course(s):\n")
             for row in results:
-                row[3] = (row[3] + " credit") + ("s" if not row[3] == "1" else "")
+                row[3] = str(float(row[3]))
                 this_result = []
                 for i, e in enumerate(row):
 
                     print(e, end=", " if i != 0 and i != 5 else " ")
-                    final_results.append(e + ", " if i != 0 and i != 5 else " ")
+                    final_results.append(e)
                 print()
             if len(results) >= 20:
                 print(f"\n Found {len(results)} matching courses. To narrow down the search further, be more specific by including more search terms.")
