@@ -1,28 +1,21 @@
-from flask import Flask, render_template, request
-from main import CourseDatabase
-
-app = Flask(__name__)
-db = CourseDatabase("DE_Equivalency_List_Clean.csv")
-db.load_data()
-db.preprocess()
+from flask import Flask
+from app.routes import main_bp
 
 
-@app.get("/")
-def home():
-    return render_template("index.html")
+def create_app():
+    app = Flask(__name__)
+
+    app.register_blueprint(main_bp)
+
+    return app
 
 
-@app.post("/search")
-def search():
-    query = request.form.get("query")
-    results = db.search(query)
-    resultsList = []
-    thisResult = []
-    if results == None:
-        return render_template("results.html", results=None, query=query, lenResults=0)
-    for i, e in enumerate(results):
-        thisResult.append(e)
-        if i % 6 == 5:
-            resultsList.append(thisResult)
-            thisResult = []
-    return render_template("results.html", results=resultsList, query=query, lenResults=len(results)//6)
+# This is the app object Gunicorn will use
+app = create_app()
+
+# Allow local development: python app.py
+if __name__ == "__main__":
+    import os
+
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
