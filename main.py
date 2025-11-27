@@ -64,7 +64,7 @@ class CourseDatabase:
     # The following static methods return booleans. They are returned by the clean_search_query function.
     # They will be used as different types of fuzzy searches. false_func means that no fuzzy search is used.
     @staticmethod
-    def false_func(*args):
+    def false_func(*args, **kwargs):
         return False
 
     @staticmethod
@@ -98,7 +98,7 @@ class CourseDatabase:
                     search = "Invalid course number"
             elif q_type == "3" and len(query) > 4:  # Course Name
                 search = search.title()
-                fuzzy_type = self.w_ratio_bool
+                fuzzy_type = self.partial_ratio_bool
             elif q_type == "4":  # Credit Value
                 search = search
             elif q_type == "5":  # High school Graduation Code
@@ -143,7 +143,7 @@ class CourseDatabase:
                 for index, item in enumerate(clean_query):
 
                     #print(index, item)
-                    if item in row[q_type] or search_type(item, row[q_type]):
+                    if item in row[q_type] or search_type(item, row[q_type], threshold=(70 if q_type == 3 else 80)):
                         matches_all[q_type].append(True)
 
                         #break
@@ -165,23 +165,30 @@ class CourseDatabase:
 
 
 
-        self.display_results(results, query)
+
+        return self.display_results(results, query)
 
     # ──────────────────────────────────────────────────────────────
     # Output
     # ──────────────────────────────────────────────────────────────
 
     def display_results(self, results: list, query: str):
-        """Print search results."""
+        """Clean and print search results."""
+        final_results = []
         if results:
             print(f"\nFound {len(results)} matching course(s):\n")
             for row in results:
-                row[3] = (row[3] + " credit") + ("s" if not row[3] == "1" else "")
+                row[3] = str(float(row[3]))
+                this_result = []
                 for i, e in enumerate(row):
+
                     print(e, end=", " if i != 0 and i != 5 else " ")
+                    final_results.append(e)
                 print()
             if len(results) >= 20:
                 print(f"\n Found {len(results)} matching courses. To narrow down the search further, be more specific by including more search terms.")
+            print(final_results)
+            return final_results
         else:
             print("\nNo courses found matching your search.")
             if " " in query and ";" not in query:
@@ -196,7 +203,7 @@ class CourseDatabase:
                 corrected_query2 = corrected_query2[:-1]
                 print(corrected_query)
                 print("Searching new query... ")
-                self.search(corrected_query2)
+                return self.search(corrected_query2)
 
 
 

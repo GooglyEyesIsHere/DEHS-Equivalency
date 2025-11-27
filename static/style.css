@@ -1,0 +1,42 @@
+/* Table formatting */
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
+
+th, td {
+    padding: 12px 16px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+tr:hover {
+    background-color: #eef;
+}
+
+/* Page typography */
+body {
+    font-family: Arial;
+    padding: 20px;
+    background: #fdfdfd;
+}
+
+h1 {
+    text-align: center;
+}
+
+.Back-button {
+margin-left: 50
+}
