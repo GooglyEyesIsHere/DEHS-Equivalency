@@ -64,7 +64,7 @@ class CourseDatabase:
     # The following static methods return booleans. They are returned by the clean_search_query function.
     # They will be used as different types of fuzzy searches. false_func means that no fuzzy search is used.
     @staticmethod
-    def false_func(*args):
+    def false_func(*args, **kwargs):
         return False
 
     @staticmethod
@@ -98,7 +98,7 @@ class CourseDatabase:
                     search = "Invalid course number"
             elif q_type == "3" and len(query) > 4:  # Course Name
                 search = search.title()
-                fuzzy_type = self.w_ratio_bool
+                fuzzy_type = self.partial_ratio_bool
             elif q_type == "4":  # Credit Value
                 search = search
             elif q_type == "5":  # High school Graduation Code
@@ -143,7 +143,7 @@ class CourseDatabase:
                 for index, item in enumerate(clean_query):
 
                     #print(index, item)
-                    if item in row[q_type] or search_type(item, row[q_type]):
+                    if item in row[q_type] or search_type(item, row[q_type], threshold=(70 if q_type == 3 else 80)):
                         matches_all[q_type].append(True)
 
                         #break
