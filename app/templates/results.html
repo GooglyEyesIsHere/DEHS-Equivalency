@@ -33,9 +33,10 @@
             <th>HS Graduation Code</th>
             <th>GE Core Subject</th>
         </tr>
-        <tr>
+
 
     {% for row in results %}
+        <tr>
         <td>{{ row[0] }}</td>
         <td>{{ row[1] }}</td>
         <td>{{ row[2] }}</td>
@@ -47,6 +48,11 @@
 
 
     </table>
+    {% if lenResults > 20%}
+        <p>
+            Found {{lenResults}} results. To narrow the search further, use more search terms.
+        </p>
+    {% endif %}
 
 {% else %}
     <p>No matching courses found.</p>

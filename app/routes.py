@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request
 from .search_engine import search
 
-main_bp = Blueprint("main", __name__)
+main_bp = Blueprint("main", __name__, static_folder="static")
 
 
 @main_bp.get("/")
@@ -34,7 +34,7 @@ def search_route():
         )
 
     results_list = results_df
-    print()
+    print("Routes.py")
     print(results_list)
 
     return render_template(
