@@ -25,7 +25,7 @@ def search_route():
     results_df = search(query)
 
     # Convert results for HTML
-    if results_df is None or results_df.empty:
+    if results_df is None:
         return render_template(
             "results.html",
             results=None,
@@ -33,7 +33,9 @@ def search_route():
             lenResults=0
         )
 
-    results_list = results_df.values.tolist()
+    results_list = results_df
+    print()
+    print(results_list)
 
     return render_template(
         "results.html",
