@@ -6,7 +6,7 @@ main_bp = Blueprint("main", __name__, static_folder="static")
 
 @main_bp.get("/")
 def home():
-    return render_template("index.html", results=None, query=None, lenResults=0)
+    return render_template("index.html")
 
 
 @main_bp.post("/search")
@@ -43,3 +43,8 @@ def search_route():
         query=query,
         lenResults=len(results_list)
     )
+
+
+@main_bp.get("/hints")
+def hints():
+    return render_template("hints.html")

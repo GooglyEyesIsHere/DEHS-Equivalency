@@ -1,64 +1,70 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Search Results</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <head>
+        <title>Search Results</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
-</head>
-<body>
-<a href="/" class="Back-button">Search again</a>
+    </head>
+    <body>
+        <a href="/" class="Back-button">Search again</a>
 
-<h1>Results for "{{ query }}"</h1>
+        <h1>Results for "{{ query }}"</h1>
 
-{% if results %}
-    Found {{lenResults}} results
-    <table>
+        {% if results %}
+            Found {{lenResults}} results
+            <table>
 
-        <colgroup>
-            <col style="background-color: white" /> <!-- White -->
-            <col style="background-color: #f0f0f0" /> <!-- Grey -->
-            <col style="background-color: white" /> <!-- White -->
-            <col style="background-color: #f0f0f0" /> <!-- Grey -->
-            <col style="background-color: white" /> <!-- White -->
-            <col style="background-color: #f0f0f0" /> <!-- Grey -->
-        </colgroup>
-        <colgroup>
-            <col style="border: 1px solid black"/>
-        </colgroup>
-        <tr>
-            <th>Course Prefix</th>
-            <th>Course Number</th>
-            <th>Course Name</th>
-            <th>HS Credit Value</th>
-            <th>HS Graduation Code</th>
-            <th>GE Core Subject</th>
-        </tr>
-
-
-    {% for row in results %}
-        <tr>
-        <td>{{ row[0] }}</td>
-        <td>{{ row[1] }}</td>
-        <td>{{ row[2] }}</td>
-        <td>{{ row[3] }}</td>
-        <td>{{ row[4] }}</td>
-        <td>{{ row[5] }}</td>
-        </tr>
-    {% endfor %}
+                <colgroup>
+                    <col style="background-color: white" /> <!-- White -->
+                    <col style="background-color: #f0f0f0" /> <!-- Grey -->
+                    <col style="background-color: white" /> <!-- White -->
+                    <col style="background-color: #f0f0f0" /> <!-- Grey -->
+                    <col style="background-color: white" /> <!-- White -->
+                    <col style="background-color: #f0f0f0" /> <!-- Grey -->
+                </colgroup>
+                <colgroup>
+                    <col style="border: 1px solid black"/>
+                </colgroup>
+                <tr>
+                    <th>Course Prefix</th>
+                    <th>Course Number</th>
+                    <th>Course Name</th>
+                    <th>HS Credit Value</th>
+                    <th>HS Graduation Code</th>
+                    <th>GE Core Subject</th>
+                </tr>
 
 
-    </table>
-    {% if lenResults > 20%}
-        <p>
-            Found {{lenResults}} results. To narrow the search further, use more search terms.
-        </p>
-    {% endif %}
+            {% for row in results %}
+                <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>{{ row[4] }}</td>
+                <td>{{ row[5] }}</td>
+                </tr>
+            {% endfor %}
 
-{% else %}
-    <p>No matching courses found.</p>
-{% endif %}
 
-<a href="/" class="Back-button">Search again</a>
+            </table>
+            {% if lenResults > 20%}
+                <p>
+                    Found {{lenResults}} results. To narrow the search further, use more search terms.
+                </p>
+            {% endif %}
 
-</body>
+        {% else %}
+            <p>No matching courses found.</p>
+        {% endif %}
+
+        <a href="/" class="Back-button">Search again</a>
+        <div class="Footer-Text">
+                <a href = "https://www.fldoe.org/core/fileparse.php/20725/urlt/19-2.pdf">Data source: Florida Department of Education's official Equivalency List (2025-2026)</a>
+        </div>
+        <form action="/hints" method="get">
+            <button type="submit">Searching tips</button>
+        </form>
+
+    </body>
 </html>

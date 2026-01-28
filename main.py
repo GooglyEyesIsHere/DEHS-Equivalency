@@ -102,11 +102,12 @@ class CourseDatabase:
             elif q_type == "4":  # Credit Value
                 search = search
             elif q_type == "5":  # High school Graduation Code
-                search = search.title()
+                search = search.upper()
                 if search in self.LETTER_CONV:
                     search = self.LETTER_CONV[search]
-                else:
-                    fuzzy_type = self.w_ratio_bool
+                fuzzy_type = self.w_ratio_bool
+                search = search.title()
+
             elif q_type == "6":  # GE Core Subject
                 search = search.title()
                 if " " in query:
@@ -133,6 +134,8 @@ class CourseDatabase:
         results = []
         for row in self.database_read:
             #for search in query:
+            if row[2] == "American Government 1 (GE Core)":
+                pass # Breakpoint here
             matches_all = [[], [], [], [], [], []]
             for q_type in range(6):
                 clean_query, search_type = self.clean_search_query(query, str(q_type + 1))
@@ -160,10 +163,6 @@ class CourseDatabase:
 
                 if matches >= len(clean_query) and row not in results:
                     results.append(row)
-
-
-
-
 
 
         return self.display_results(results, query)
@@ -204,7 +203,6 @@ class CourseDatabase:
                 print(corrected_query)
                 print("Searching new query... ")
                 return self.search(corrected_query2)
-
 
 
 # ──────────────────────────────────────────────────────────────

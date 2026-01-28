@@ -2,12 +2,23 @@
 <html>
 <head>
     <title>DE Course Search</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <h1>Course Search</h1>
+    <h2>Warning: This will bring results for 2025-2026 courses, NOT 2026-2027 courses.</h2>
+    <h3>This tool searches the Florida Department of Education Dual Enrollment High School Equivalency list for courses matching your query. </h3>
     <form action="/search" method="post">
         <input type="text" name="query" placeholder="Search courses...">
         <button type="submit">Search</button>
     </form>
+    <p>Are you new here, or having trouble finding courses?</p>
+    Click the button below to see more in-depth details on how to find courses.
+    <form action="/hints" method="get">
+        <button type="submit">Searching tips</button>
+    </form>
+    <div class="Footer-Text">
+        <a href = "https://www.fldoe.org/core/fileparse.php/20725/urlt/19-2.pdf">Data source: Florida Department of Education's official Equivalency List (2025-2026)</a>
+    </div>
 </body>
 </html>
