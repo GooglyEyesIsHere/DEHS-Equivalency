@@ -38,5 +38,13 @@ h1 {
 }
 
 .Back-button {
-margin-left: 50
+    margin-left: 50;
 }
+.Footer-Text {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+

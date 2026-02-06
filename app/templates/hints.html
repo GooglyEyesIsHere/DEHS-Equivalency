@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>DE Search Hints</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <form action="/" method="get">
+            <button type="submit">Back to search</button>
+        </form>
+        <h1>
+            Searching hints (work in progress)
+        </h1>
+        <h2>
+            What to expect
+        </h2>
+        <p>
+            This site allows you to search for courses from the Florida Department of Education's list of dual enrollment courses.
+        </p>
+        <p>
+            Each course is split into 6 columns, each one containing information about the course. Here are the columns with explanations.
+        </p>
+        <h3>
+            Course Prefix
+        </h3>
+        <p>
+            This is a helpful identifier to get you into the ballpark of what the course is about. It is 3 letters in all uppercase.
+        </p>
+        <p>
+            It is standardized for each course across Florida. Examples: ENC, MAT
+        </p>
+        <h3>
+            Course Number
+        </h3>
+        <p>
+            This is a 4-digit number, usually with its first digit replaced by X. Combined with the course prefix, it can uniquely identify any course provided in the list.
+        </p>
+        <p>
+            It can also contain /L or C at the end of it, to separate it from similar courses with variations such as being a lab or combined with a normal course and a lab.
+        </p>
+        <p>
+            It is standardized for each course across Florida. Examples: X101, X101/L, X101C
+        </p>
+        <p>
+            For more specific details about course numbers, please refer to <a href = "https://catalog.easternflorida.edu/course-descriptions-information/scns/scns.pdf">this document</a>.
+        </p>
+        <h3>
+            Course Name
+        </h3>
+        <p>
+            This is the name of the course. Examples: Freshman Composition Skills 1 (GE Core), Advanced College Writing
+        </p>
+        <h3>
+            High School Credit Value
+        </h3>
+        <p>
+            This is how many high school credits the course is worth. This could be considered "the most important" information in the row.
+        </p>
+        <p>
+            Note that it is always represented with a dot (.) in it, even if it provides a whole number of credits. This makes it easier to search for directly. Examples: 0.5, 1.0, 1.5, 2.0
+        </p>
+        <h3>
+            High School Graduation Code
+        </h3>
+        <p>
+            This is a two-letter code representing what the course counts as for high school. This site automatically expands it to its full meaning internally. Examples: AG, English/Language Arts (Both are representations of graduation codes)
+        </p>
+        <h3>
+            General Education Core Subject
+        </h3>
+        <p>
+            This is what core subject colleges will count this course as. If the course is not a core subject, the site will display No Core Subject in this column. Examples: Communication, No Core Subject
+        </p>
+        <br>
+
+        <h2>
+            General searching tips
+        </h2>
+        <h3>
+            Most common search
+        </h3>
+        <p>
+            The most common search for somebody to do follows this format: ENC 1101, or 1101 ENC. Here are tips to make things easier and get better results:
+        </p>
+        <p>
+            First, capitalization does not matter. ENC is processed the same as enc or Enc. Also, the first digit in the search is automatically changed to X. This means that enc 1101 is processed the same as ENC X101.
+        </p>
+        <p>
+            Third, it helps to put a semicolon between the course prefix and course number. It will be explained why in the section about making multiple searches at once.
+        </p>
+        <h3>
+            Searching by course name
+        </h3>
+        <p>
+            If you already know what the course is called, here are some ways to get better results:
+        </p>
+        <p>
+            First, you don't need to have the exact wording or typography memorized. This site is pretty lenient about spelling mistakes, or even forgetting whole words.
+        </p>
+        <p>
+            Because of this, you might get false positives when searching by course name.
+        </p>
+        <h3>
+            Searching by HS credit value
+        </h3>
+        <p>
+            If you are looking for courses with a specific credit value, here are tips for better results:
+        </p>
+        <p>
+            First, make sure you include a . in the number. If you are looking for a course worth two credits, make sure to type 2.0 instead of 2.
+        </p>
+        <p>
+            Also, you will get hundreds of results even if you do it correctly. Because of this, it's recommended to pair this with another search at the same time.
+        </p>
+        <p>
+            More information about this is in the section on multiple searches at once.
+        </p>
+        <form action="/" method="get">
+            <button type="submit">Back to search</button>
+        </form>
+    </body>
+</html>
