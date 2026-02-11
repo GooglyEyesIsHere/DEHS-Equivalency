@@ -164,8 +164,41 @@ class CourseDatabase:
                 if matches >= len(clean_query) and row not in results:
                     results.append(row)
 
-
         return self.display_results(results, query)
+
+    def search_by_column(self, query: str, column: int):
+        query = query.title().strip()
+        results = []
+        clean_query, search_type = self.clean_search_query(query, str(column + 1))
+        clean_query = clean_query[0]
+        # Only supports single search.
+        for row in self.database_read:
+            if clean_query in row[column] or search_type(clean_query, column, threshold=(70 if column == 3 else 80)):
+                results.append(row)
+        self.display_results(results, query)
+        return results
+    def search_columns(self, queries: list, columns: list):
+        results_all = []
+
+        for i, e in enumerate(columns):
+            query = queries[i]
+            results_all.append([])
+            this_results = self.search_by_column(query, e)
+            if i >= 1:
+                print(this_results)
+
+                for o in this_results:
+                    if o in results_all[i-1]:
+                        results_all[i].append(o)
+                    else:
+                        print("Not found: ")
+                        print(o)
+            else:
+                results_all[0] = this_results
+        print(results_all)
+        return results_all[len(columns)-1]
+
+
 
     # ──────────────────────────────────────────────────────────────
     # Output
@@ -214,7 +247,7 @@ def main():
     course_db.preprocess()
     print("To search for a course, enter a search (Such as Enc; 1101)")
     search_query = input("Enter your search here, separated by semicolons: ")
-    course_db.search(search_query)
+    course_db.search_columns([search_query, "x101"], [0,1])
 
 
 if __name__ == "__main__":
