@@ -69,6 +69,7 @@ class CourseDatabase:
 
     @staticmethod
     def w_ratio_bool(compare, compare_to, threshold=80):
+        print(type(compare), compare_to)
         return fuzz.WRatio(compare, compare_to) >= threshold
 
     @staticmethod
@@ -173,7 +174,7 @@ class CourseDatabase:
         clean_query = clean_query[0]
         # Only supports single search.
         for row in self.database_read:
-            if clean_query in row[column] or search_type(clean_query, column, threshold=(70 if column == 3 else 80)):
+            if clean_query in row[column] or search_type(clean_query, row[column], threshold=(70 if column == 3 else 80)):
                 results.append(row)
         self.display_results(results, query)
         return results
@@ -190,12 +191,9 @@ class CourseDatabase:
                 for o in this_results:
                     if o in results_all[i-1]:
                         results_all[i].append(o)
-                    else:
-                        print("Not found: ")
-                        print(o)
             else:
                 results_all[0] = this_results
-        print(results_all)
+        print(results_all[len(columns)-1])
         return results_all[len(columns)-1]
 
 
@@ -245,9 +243,9 @@ def main():
     course_db = CourseDatabase("DE_Equivalency_List_Clean.csv")
     course_db.load_data()
     course_db.preprocess()
-    print("To search for a course, enter a search (Such as Enc; 1101)")
+    print("To search for a course, enter a search (Such as Enc; 1101). Note: Searching directly from here may not work due to debug tools being active.")
     search_query = input("Enter your search here, separated by semicolons: ")
-    course_db.search_columns([search_query, "x101"], [0,1])
+    course_db.search_columns([search_query], [4])
 
 
 if __name__ == "__main__":
