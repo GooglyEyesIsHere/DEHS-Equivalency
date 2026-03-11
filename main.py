@@ -208,7 +208,10 @@ class CourseDatabase:
         if results:
             print(f"\nFound {len(results)} matching course(s):\n")
             for row in results:
-                row[3] = str(float(row[3]))
+                try:
+                    row[3] = str(float(row[3]))
+                except ValueError:
+                    row[3] = "Unknown"
                 this_result = []
                 for i, e in enumerate(row):
 
