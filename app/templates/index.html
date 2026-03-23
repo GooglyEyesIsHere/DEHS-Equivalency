@@ -6,17 +6,18 @@
 </head>
 <body>
     <h1>Course Search</h1>
-    <h2>Warning: This tool currently shows results for the 2025-2026 list, NOT 2026-2027.</h2>
     <h3>This tool searches the Florida Department of Education Dual Enrollment High School Equivalency list for courses matching your query. </h3>
-        <table>
+
+    <!--
+    <table>
 
         <colgroup>
-            <col style="background-color: white" /> <!-- White -->
-            <col style="background-color: #f0f0f0" /> <!-- Grey -->
-            <col style="background-color: white" /> <!-- White -->
-            <col style="background-color: #f0f0f0" /> <!-- Grey -->
-            <col style="background-color: white" /> <!-- White -->
-            <col style="background-color: #f0f0f0" /> <!-- Grey -->
+            <col style="background-color: white" /> <-- White ->
+            <col style="background-color: #f0f0f0" /> <-- Grey ->
+            <col style="background-color: white" /> <-- White ->
+            <col style="background-color: #f0f0f0" /> <-- Grey ->
+            <col style="background-color: white" /> <-- White ->
+            <col style="background-color: #f0f0f0" /> <-- Grey ->
         </colgroup>
         <colgroup>
             <col style="border: 1px solid black"/>
@@ -68,6 +69,7 @@
             </td>
         </tr>
     </table>
+    -->
     <form action="/search" method="post">
         <input type="text" name="query" placeholder="Search courses... (Enter course prefix, number, or keyword)">
         <button type="submit">Search</button>
@@ -77,10 +79,6 @@
     <form action="/hints" method="get">
         <button type="submit">Search tips</button>
     </form>
-    <div class="Footer-Text">
-        <a href = "https://github.com/GooglyEyesIsHere/DEHS-Equivalency/tree/Fly">&copy; 2026 Aiden Dugan</a>
-        -
-        <a href = "https://www.fldoe.org/core/fileparse.php/20725/urlt/19-2.pdf">Data source: Florida Department of Education's official Equivalency List (2025-2026)</a>
-    </div>
+    {% include "footer.html" %}
 </body>
 </html>

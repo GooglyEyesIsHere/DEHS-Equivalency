@@ -208,7 +208,10 @@ class CourseDatabase:
         if results:
             print(f"\nFound {len(results)} matching course(s):\n")
             for row in results:
-                row[3] = str(float(row[3]))
+                try:
+                    row[3] = str(float(row[3]))
+                except ValueError:
+                    row[3] = "Unknown"
                 this_result = []
                 for i, e in enumerate(row):
 
@@ -245,7 +248,7 @@ def main():
     course_db.preprocess()
     print("To search for a course, enter a search (Such as Enc; 1101). Note: Searching directly from here may not work due to debug tools being active.")
     search_query = input("Enter your search here, separated by semicolons: ")
-    course_db.search_columns([search_query], [4])
+    course_db.search(search_query)
 
 
 if __name__ == "__main__":
