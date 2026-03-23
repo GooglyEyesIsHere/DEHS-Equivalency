@@ -1,5 +1,23 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0XQCTVCFKC"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-0XQCTVCFKC');
+        </script>
+        <title>DE Course Search</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <h1>Course Search</h1>
+        <h3>This tool searches the Florida Department of Education Dual Enrollment High School Equivalency list for courses matching your query. </h3>
+        <!--
+        <table>
 <head>
     <title>DE Course Search</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
@@ -81,4 +99,78 @@
     </form>
     {% include "footer.html" %}
 </body>
+            <colgroup>
+                <col style="background-color: white" /> < White ->
+                <col style="background-color: #f0f0f0" /> < Grey ->
+                <col style="background-color: white" /> < White ->
+                <col style="background-color: #f0f0f0" /> < Grey ->
+                <col style="background-color: white" /> <!- White ->
+                <col style="background-color: #f0f0f0" /> <!- Grey ->
+            </colgroup>
+            <colgroup>
+                <col style="border: 1px solid black"/>
+            </colgroup>
+            <tr>
+                <th>Course Prefix</th>
+                <th>Course Number</th>
+                <th>Course Name</th>
+                <th>HS Credit Value</th>
+                <th>HS Graduation Code</th>
+                <th>GE Core Subject</th>
+            </tr>
+            <tr>
+                <td>
+                    <form action="/search" method="post">
+                        <input type="text" name="query" placeholder="Search column (ENC, PHY)">
+                        <button type="submit">Search</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="/search" method="post">
+                        <input type="text" name="query" placeholder="Search column (ENC, PHY)">
+                        <button type="submit">Search</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="/search" method="post">
+                        <input type="text" name="query" placeholder="Search column (ENC, PHY)">
+                        <button type="submit">Search</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="/search" method="post">
+                        <input type="text" name="query" placeholder="Search column (ENC, PHY)">
+                        <button type="submit">Search</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="/search" method="post">
+                        <input type="text" name="query" placeholder="Search column (ENC, PHY)">
+                        <button type="submit">Search</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="/search" method="post">
+                        <input type="text" name="query" placeholder="Search column (ENC, PHY)">
+                        <button type="submit">Search</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+        -->
+        <form action="/search" method="post">
+            <input type="text" name="query" placeholder="Search courses... (Enter course prefix, number, or keyword)">
+            <button type="submit">Search</button>
+        </form>
+        <p>Are you new here, or having trouble finding courses?</p>
+        Click the button below to see more in-depth details on how to find courses.
+        <form action="/hints" method="get">
+            <button type="submit">Search tips</button>
+        </form>
+        <div class="Footer-Text">
+            <a href = "https://github.com/GooglyEyesIsHere/DEHS-Equivalency/tree/Fly">&copy; 2026 Aiden Dugan</a>
+            -
+            <a href = "https://www.fldoe.org/core/fileparse.php/20725/urlt/19-2.pdf">Data source: Florida Department of Education's official Equivalency List (2025-2026)</a>
+        </div>
+    </body>
 </html>

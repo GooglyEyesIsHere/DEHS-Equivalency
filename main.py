@@ -9,6 +9,7 @@ class CourseDatabase:
     def __init__(self, csv_path: str):
         """Initialize the database object."""
         self.csv_path = csv_path
+        print(csv_path)
         self.database = None
         self.database_read = []
         self.LETTER_CONV = {
@@ -69,7 +70,6 @@ class CourseDatabase:
 
     @staticmethod
     def w_ratio_bool(compare, compare_to, threshold=80):
-        print(type(compare), compare_to)
         return fuzz.WRatio(compare, compare_to) >= threshold
 
     @staticmethod
@@ -243,7 +243,7 @@ class CourseDatabase:
 # Main Driver
 # ──────────────────────────────────────────────────────────────
 def main():
-    course_db = CourseDatabase("DE_Equivalency_List_Clean.csv")
+    course_db = CourseDatabase("DE_Equivalency_List_26_27.csv")
     course_db.load_data()
     course_db.preprocess()
     print("To search for a course, enter a search (Such as Enc; 1101). Note: Searching directly from here may not work due to debug tools being active.")
