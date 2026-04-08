@@ -48,3 +48,7 @@ def search_route():
 @main_bp.get("/hints")
 def hints():
     return render_template("hints.html")
+
+@main_bp.get("/aboutme")
+def aboutme():
+    return render_template("aboutme.html")
